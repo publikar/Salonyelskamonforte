@@ -2,6 +2,8 @@ package publikar.salonyelskamonforte;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,19 +17,17 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
-import Objetos.RegistroClienteTask;
 import WebService.RequestMethod;
 import WebService.RestClient;
 import WebService.WebUrl;
 
 public class RegistroActivity extends AppCompatActivity {
 
-    EditText etxtnombre,etxtapellidos,etxttelefono,etxtemail,etxtpassword;
+    EditText etxtnombre, etxtapellidos, etxttelefono, etxtemail, etxtpassword;
     TextView txtcumple;
     Button btnenviar;
-  public static  int respuesta;
-static RestClient restClient;
+    public int respuesta;
+    RestClient restClient;
     DatePickerDialog.OnDateSetListener date;
     Calendar myCalendar = Calendar.getInstance();
 
@@ -37,12 +37,12 @@ static RestClient restClient;
         setContentView(R.layout.activity_registro);
 
 
-        etxtnombre=(EditText)findViewById(R.id.txtNombre);
-        etxtapellidos=(EditText)findViewById(R.id.editApellido);
-        etxttelefono=(EditText)findViewById(R.id.editMovil);
-        etxtemail=(EditText)findViewById(R.id.editEmail);
-        etxtpassword=(EditText)findViewById(R.id.editPassNum);
-        btnenviar=(Button)findViewById(R.id.buttonENVIAR);
+        etxtnombre = (EditText) findViewById(R.id.txtNombre);
+        etxtapellidos = (EditText) findViewById(R.id.editApellido);
+        etxttelefono = (EditText) findViewById(R.id.editMovil);
+        etxtemail = (EditText) findViewById(R.id.editEmail);
+        etxtpassword = (EditText) findViewById(R.id.editPassNum);
+        btnenviar = (Button) findViewById(R.id.buttonENVIAR);
         btnenviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,14 +57,14 @@ static RestClient restClient;
                     progressDialog.setMessage("Enviando datos, por favor espere...");
                     RegistroClienteTask registroClienteTask =
                             new RegistroClienteTask(progressDialog, RegistroActivity.this);
-                }
-                else
-                {
-                    Toast.makeText(RegistroActivity.this,"Llene todos los campos",Toast.LENGTH_SHORT).show();
+                    registroClienteTask.execute();
+                    limpiarCampos();
+                } else {
+                    Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        txtcumple=(TextView)findViewById(R.id.textCumpleaños);
+        txtcumple = (TextView) findViewById(R.id.textCumpleaños);
         txtcumple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,9 +76,7 @@ static RestClient restClient;
         });
 
 
-
-
-         date = new DatePickerDialog.OnDateSetListener() {
+        date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -87,42 +85,44 @@ static RestClient restClient;
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-               actualizarTextView();
+                actualizarTextView();
             }
 
         };
     }
 
-    private void actualizarTextView()
-    {
+    private void limpiarCampos() {
+        etxtnombre.setText("");
+        txtcumple.setText("Fecha de Cumpleaños");
+    }
+
+    private void actualizarTextView() {
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        Toast.makeText(RegistroActivity.this,sdf.format(myCalendar.getTime()),Toast.LENGTH_SHORT).show();
+        Toast.makeText(RegistroActivity.this, sdf.format(myCalendar.getTime()), Toast.LENGTH_SHORT).show();
         txtcumple.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void request()
-    {
-        restClient=new RestClient(WebUrl.webUrl+"registro.php");
+    private void request() {
+        restClient = new RestClient(WebUrl.webUrl + "registro.php");
         restClient.clearAddHeader();
         restClient.clearAddParam();
-        restClient.AddParam("nombre",etxtnombre.getText().toString());
-        restClient.AddParam("apellidos",etxtapellidos.getText().toString());
-        restClient.AddParam("movil",etxttelefono.getText().toString());
-        restClient.AddParam("email",etxtemail.getText().toString());
-        restClient.AddParam("cumpleaños",txtcumple.getText().toString());
-        restClient.AddParam("password",etxtpassword.getText().toString());
-
+        restClient.AddParam("nombre", etxtnombre.getText().toString());
+        restClient.AddParam("apellidos", etxtapellidos.getText().toString());
+        restClient.AddParam("movil", etxttelefono.getText().toString());
+        restClient.AddParam("email", etxtemail.getText().toString());
+        restClient.AddParam("cumpleaños", txtcumple.getText().toString());
+        restClient.AddParam("password", etxtpassword.getText().toString());
 
 
     }
-    public static void enviarRegistro()
-    {
+
+    public void enviarRegistro() {
 
         try {
             restClient.Execute(RequestMethod.POST);
-            respuesta=restClient.getResponseCode();
-            Log.d("Respuesta",Integer.toString(respuesta));
+            //  respuesta=restClient.getResponseCode();
+            Log.d("Respuesta", Integer.toString(respuesta));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,6 +131,37 @@ static RestClient restClient;
 
     }
 
+    public class RegistroClienteTask extends AsyncTask<Void, Void, Void> {
+        private ProgressDialog progressDialog;
+        private Context context;
 
+        public RegistroClienteTask(ProgressDialog progressDialog, Context context) {
+            this.context = context;
+            this.progressDialog = progressDialog;
+        }
 
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            enviarRegistro();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+           // if (respuesta == 200 || respuesta == 201) {
+                Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                limpiarCampos();
+           // } else {
+           //     Toast.makeText(context, "Ocurrió un error.Intente más tarde", Toast.LENGTH_SHORT).show();
+            //}
+        }
+    }
 }
+
+

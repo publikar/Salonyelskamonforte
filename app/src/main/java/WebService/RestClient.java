@@ -120,10 +120,12 @@ import java.util.ArrayList;
                     writer.close();
                     connection.connect();
                     response = convertStreamToString(connection.getInputStream());
+                    this.responseCode=connection.getResponseCode();
                     if(connection.getResponseCode()==201 || connection.getResponseCode()==200)
                     {
                         //Si se obtuvo una respuesta de que nuestros datos han sido consultados,
                         //el servidor devuelve un código 200 o 201
+                        this.responseCode=connection.getResponseCode();
                         success = true;
                     }
 
