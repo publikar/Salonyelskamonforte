@@ -92,6 +92,7 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     private void limpiarCampos() {
+        //Limpiar todos los controles
         etxtnombre.setText("");
         txtcumple.setText("Fecha de Cumpleaños");
     }
