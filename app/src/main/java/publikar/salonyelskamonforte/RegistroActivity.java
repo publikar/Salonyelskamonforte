@@ -93,7 +93,11 @@ public class RegistroActivity extends AppCompatActivity {
 
     private void limpiarCampos() {
         //Limpiar todos los controles
-        etxtnombre.setText("");
+        etxtnombre.setText("Ingrese su Nombre");
+        etxtnombre.setText("Ingrese su Apellido");
+        etxtnombre.setText("Ingrese su Email");
+        etxtnombre.setText("Ingrese su Móvil");
+        etxtnombre.setText("Ingrese su Elige Password (Solo Numeros)");
         txtcumple.setText("Fecha de Cumpleaños");
     }
 
