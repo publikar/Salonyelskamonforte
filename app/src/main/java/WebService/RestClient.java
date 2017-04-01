@@ -1,4 +1,4 @@
-package RestClient;
+package WebService;
 
 import android.os.StrictMode;
 import android.util.Log;
