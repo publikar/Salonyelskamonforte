@@ -26,9 +26,9 @@ public class BienvenidaActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = new Intent(this, RegistroActivity.class);
+       //Intent intent = new Intent(this, RegistroActivity.class);
 
-        {
+        //{
             btnlogin = (Button) findViewById(R.id.btnIngresa);
             btnlogin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -40,12 +40,12 @@ public class BienvenidaActivity extends AppCompatActivity {
                 }
             });
 
-            Intent intentLog = new Intent(this, LoginActivity.class);
+          //  Intent intentLog = new Intent(this, LoginActivity.class);
 
 
 
 
-        }
+        //}
 
 
 
