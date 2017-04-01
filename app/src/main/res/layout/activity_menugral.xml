@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondogral2"
+    tools:context="publikar.salonyelskamonforte.MenugralActivity">
+
+    <Button
+        android:id="@+id/buttonofertas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ofertas"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPuntos"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/buttonPuntos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CLIENTE FRECUENTE"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCursos"
+        app:layout_constraintTop_toBottomOf="@+id/buttonofertas"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/buttonLlegar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="COMO LLEGAR"
+        app:layout_constraintBottom_toTopOf="@+id/buttonExpediente"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCursos"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/buttonCursos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CURSOS"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLlegar"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPuntos"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/buttonExpediente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contacto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLlegar" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="publikar.salonyelskamonforte">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/hairstyleiconrojo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".BienvenidaActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RegistroActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MenugralActivity" />
+        <activity android:name=".OfertasActivity" />
+        <activity android:name=".CursoActivity" />
+        <activity android:name=".LlegaActivity" />
+        <activity android:name=".FrecuenteActivity" />
+        <activity android:name=".ExpedienteActivity"></activity>
+    </application>
+
+</manifest>
