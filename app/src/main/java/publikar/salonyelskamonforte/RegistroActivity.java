@@ -100,7 +100,7 @@ public class RegistroActivity extends AppCompatActivity {
         etxtemail.setText("");
         etxttelefono.setText("");
         etxtpassword.setText("");
-        txtcumple.setText("");
+        txtcumple.setText("Fecha de Cumpleaños");
     }
 
     private void actualizarTextView() {
