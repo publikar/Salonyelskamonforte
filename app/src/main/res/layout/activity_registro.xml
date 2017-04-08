@@ -8,9 +8,10 @@
     android:fillViewport="true"
     >
 
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/fondogral2"
     tools:context="publikar.salonyelskamonforte.RegistroActivity">
 
@@ -113,5 +114,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPassNum"
         app:layout_constraintVertical_bias="0.543" />
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
 </ScrollView>
