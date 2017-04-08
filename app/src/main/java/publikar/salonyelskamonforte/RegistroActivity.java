@@ -3,6 +3,8 @@ package publikar.salonyelskamonforte;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -159,9 +161,20 @@ public class RegistroActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
+
+            String mailto = "mailto:" +etxtemail.getText().toString()+
+                    "?cc=" + "yelskamonfortesalon@gmail.com" +
+                    "&subject=" + Uri.encode("Se ha suscrito a Yelska Monforte Salon") +
+                    "&body=" + Uri.encode("Gracias por suscribirse");
             if (respuesta == 200 || respuesta == 201) {
                 Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
                 limpiarCampos();
+                //enviar correo electrónico
+
+                Intent intent=new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse(mailto));
+                startActivity(intent);
+
             } else {
                 Toast.makeText(context, "Ocurrió un error.Intente más tarde", Toast.LENGTH_SHORT).show();
             }
