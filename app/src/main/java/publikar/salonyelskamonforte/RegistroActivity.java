@@ -126,7 +126,7 @@ public class RegistroActivity extends AppCompatActivity {
 
         try {
             restClient.Execute(RequestMethod.POST);
-            //  respuesta=restClient.getResponseCode();
+             respuesta=restClient.getResponseCode();
             Log.d("Respuesta", Integer.toString(respuesta));
 
         } catch (Exception e) {
@@ -159,12 +159,12 @@ public class RegistroActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
-           // if (respuesta == 200 || respuesta == 201) {
+            if (respuesta == 200 || respuesta == 201) {
                 Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
                 limpiarCampos();
-           // } else {
-           //     Toast.makeText(context, "Ocurrió un error.Intente más tarde", Toast.LENGTH_SHORT).show();
-            //}
+            } else {
+                Toast.makeText(context, "Ocurrió un error.Intente más tarde", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
