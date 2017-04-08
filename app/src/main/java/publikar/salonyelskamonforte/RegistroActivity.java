@@ -60,7 +60,7 @@ public class RegistroActivity extends AppCompatActivity {
                     RegistroClienteTask registroClienteTask =
                             new RegistroClienteTask(progressDialog, RegistroActivity.this);
                     registroClienteTask.execute();
-                    limpiarCampos();
+                 //   limpiarCampos();
                 } else {
                     Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
                 }
@@ -162,17 +162,20 @@ public class RegistroActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
 
-            String mailto = "mailto:" +etxtemail.getText().toString()+
+           /* String mailto = "mailto:" +etxtemail.getText().toString()+
                     "?cc=" + "yelskamonfortesalon@gmail.com" +
                     "&subject=" + Uri.encode("Se ha suscrito a Yelska Monforte Salon") +
-                    "&body=" + Uri.encode("Gracias por suscribirse");
+                    "&body=" + Uri.encode("Gracias por suscribirse");*/
             if (respuesta == 200 || respuesta == 201) {
                 Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
                 limpiarCampos();
                 //enviar correo electrónico
 
-                Intent intent=new Intent(Intent.ACTION_SENDTO);
+               /* Intent intent=new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse(mailto));
+                startActivity(intent);*/
+
+               Intent intent=new Intent(RegistroActivity.this,LoginActivity.class);
                 startActivity(intent);
 
             } else {
