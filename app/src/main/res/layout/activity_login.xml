@@ -25,7 +25,8 @@
         android:hint="E-mail"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         app:layout_constraintBottom_toTopOf="@+id/editPass"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -39,7 +40,8 @@
         android:hint="Password Numerico"
         android:inputType="numberPassword"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+
+        android:textColor="@color/common_google_signin_btn_text_light_pressed"
         app:layout_constraintBottom_toTopOf="@+id/buttonEnter"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

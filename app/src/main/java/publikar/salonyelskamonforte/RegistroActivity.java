@@ -52,7 +52,7 @@ public class RegistroActivity extends AppCompatActivity {
                 if (!(etxtnombre.getText().toString().matches("") || etxtapellidos.getText().toString().matches("")
                         || etxttelefono.getText().toString().matches("") || etxtemail.getText().toString().matches("")
                         || etxtpassword.getText().toString().matches("") ||
-                        txtcumple.toString().matches("Fecha de Cumpleaños"))) {
+                        txtcumple.getText().toString().matches("Fecha de Cumpleaños"))) {
 
                     request();
                     ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
