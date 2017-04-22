@@ -55,11 +55,14 @@ public class DatosUsuario {
 
     public void setUserEmail(String email)
     {
-        editor.putString(USER_EMAIL,email).commit();
+        editor.putString(USER_EMAIL,email);
+        editor.commit();
+
     }
 
     public String getUserEmail()
     {
+        String x=preferences.getString(USER_EMAIL,"");
         return  preferences.getString(USER_EMAIL,"");
     }
 
