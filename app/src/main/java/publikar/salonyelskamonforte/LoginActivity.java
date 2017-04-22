@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editPass;
     RestClient restClient;
     Boolean existe=false;
+    CheckBox chkrecordar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPass = (EditText) findViewById(R.id.editPass);
-
+chkrecordar=(CheckBox)findViewById(R.id.chkRecordar);
         btnok = (Button) findViewById(R.id.buttonEnter);
         btnok.setOnClickListener(new View.OnClickListener() {
             @Override
