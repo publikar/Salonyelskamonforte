@@ -3,6 +3,8 @@ package Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import Objetos.Clientes;
+
 /**
  * Created by A on 22/04/2017.
  */
@@ -89,6 +91,17 @@ public class DatosUsuario {
     public String getUserPassword()
     {
         return preferences.getString(USER_PASSWORD,"");
+    }
+
+
+    public void saveCliente(Clientes cliente)
+    {
+        setUserName(cliente.getNombre());
+        setUserLastname(cliente.getApellidos());
+        setUserEmail(cliente.getEmail());
+        setUserBirthday(cliente.getCumpleaños());
+        setUserMovil(cliente.getMovil());
+        setUserPassword(cliente.getPassword());
     }
 
 }

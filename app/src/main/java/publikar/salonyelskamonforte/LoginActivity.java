@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import Objetos.Clientes;
+import Util.DatosUsuario;
 import WebService.RequestMethod;
 import WebService.RestClient;
 import WebService.WebUrl;
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     RestClient restClient;
     Boolean existe=false;
     CheckBox chkrecordar;
+    DatosUsuario datosUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,8 @@ chkrecordar=(CheckBox)findViewById(R.id.chkRecordar);
 
             }
         });
+datosUsuario=new DatosUsuario(this);
+
 
         //  Intent intent = new Intent(this, MenugralActivity.class);
     }
@@ -77,8 +82,9 @@ chkrecordar=(CheckBox)findViewById(R.id.chkRecordar);
     }
 
     private void login() {
+        Clientes clientes=null;
         try {
-            Clientes clientes;
+
             restClient.Execute(RequestMethod.POST);
             JSONArray json = new JSONArray(restClient.getResponse());
             if (!json.isNull(0)) {
@@ -103,6 +109,12 @@ chkrecordar=(CheckBox)findViewById(R.id.chkRecordar);
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if(chkrecordar.isChecked())
+        {if(clientes!=null) {
+            datosUsuario.saveCliente(clientes);
+        }
+
         }
     }
 
