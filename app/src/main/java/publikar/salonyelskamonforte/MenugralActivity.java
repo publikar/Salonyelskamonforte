@@ -29,9 +29,7 @@ public class MenugralActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = new Intent(this, OfertasActivity.class);
 
-        {
             btnpuntos = (Button) findViewById(R.id.buttonPuntos);
             btnpuntos.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -43,14 +41,7 @@ public class MenugralActivity extends AppCompatActivity {
                 }
             });
 
-            Intent intentLog = new Intent(this, FrecuenteActivity.class);
 
-
-
-
-        }
-
-        {
 
             btncurso = (Button) findViewById(R.id.buttonCursos);
             btncurso.setOnClickListener(new View.OnClickListener() {
@@ -63,26 +54,19 @@ public class MenugralActivity extends AppCompatActivity {
                 }
             });
 
-            Intent intentLog = new Intent(this, CursoActivity.class);
-        }
 
-        {
             btnllegar = (Button) findViewById(R.id.buttonLlegar);
             btnllegar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intentLog = new Intent(MenugralActivity.this, LlegaActivity.class);
-                    startActivity(intentLog);
+
+                 Intent intentLog = new Intent(MenugralActivity.this, LlegaActivity.class);
+                  startActivity(intentLog);
 
 
                 }
             });
 
-            Intent intentLog = new Intent(this, LlegaActivity.class);
-
-        }
-
-        {
             btnexpe = (Button) findViewById(R.id.buttonExpediente);
             btnexpe.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,9 +78,7 @@ public class MenugralActivity extends AppCompatActivity {
                 }
             });
 
-            Intent intentLog = new Intent(this, ExpedienteActivity.class);
 
-        }
 
 
 
