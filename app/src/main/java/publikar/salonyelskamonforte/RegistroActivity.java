@@ -68,7 +68,7 @@ public class RegistroActivity extends AppCompatActivity {
                     cumple = txtcumple.getText().toString();
                     contrasenia = etxtpassword.getText().toString();
 
-                    request();
+
                     ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
                     progressDialog.setMessage("Enviando datos, por favor espere...");
                     RegistroClienteTask registroClienteTask =
@@ -76,11 +76,7 @@ public class RegistroActivity extends AppCompatActivity {
                     registroClienteTask.execute();
 
 
-                    progressDialog = new ProgressDialog(RegistroActivity.this);
-                    progressDialog.setMessage("Por favor espere...");
-                    EnviarCorreoTask enviarCorreoTask=
-                            new EnviarCorreoTask(progressDialog, RegistroActivity.this);
-                    enviarCorreoTask.execute();
+
                     //   limpiarCampos();
                 } else {
                     Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
@@ -150,23 +146,20 @@ public class RegistroActivity extends AppCompatActivity {
         return false;
     }
 
-    private void request() {
-        restClient = new RestClient(WebUrl.webUrl + "registro.php");
-        restClient.clearAddHeader();
-        restClient.clearAddParam();
-        restClient.AddParam("nombre", etxtnombre.getText().toString());
-        restClient.AddParam("apellidos", etxtapellidos.getText().toString());
-        restClient.AddParam("movil", etxttelefono.getText().toString());
-        restClient.AddParam("email", etxtemail.getText().toString());
-        restClient.AddParam("cumpleaños", txtcumple.getText().toString());
-        restClient.AddParam("password", etxtpassword.getText().toString());
 
-
-    }
 
     public void enviarRegistro() {
 
         try {
+            restClient = new RestClient(WebUrl.webUrl + "registro.php");
+            restClient.clearAddHeader();
+            restClient.clearAddParam();
+            restClient.AddParam("nombre", etxtnombre.getText().toString());
+            restClient.AddParam("apellidos", etxtapellidos.getText().toString());
+            restClient.AddParam("movil", etxttelefono.getText().toString());
+            restClient.AddParam("email", etxtemail.getText().toString());
+            restClient.AddParam("cumpleaños", txtcumple.getText().toString());
+            restClient.AddParam("password", etxtpassword.getText().toString());
             restClient.Execute(RequestMethod.POST);
             respuesta = restClient.getResponseCode();
             Log.d("Respuesta", Integer.toString(respuesta));
@@ -196,7 +189,23 @@ public class RegistroActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             if (!emailexist()) {
                 enviarRegistro();
-
+                try {
+                    GMailSender sender = new GMailSender("yelskamonfortesalon@gmail.com", "MonfortE2016AvilA");
+                    sender.sendMail("Registro exitoso",
+                            "Gracias por registrarse en la app Yelska Monforte Salon",
+                            "yelskamonfortesalon@gmail.com", email
+                    );
+                    sender.sendMail("Nuevo usuario registrado",
+                            "Se registró el siguiente usuario:\n"+
+                                    "Nombre:"+nombre+"\n"+
+                                    "Apellido:"+apellidos+"\n"+
+                                    "Móvil:"+telefono+"\n"+
+                                    "Email:"+email+"\n"+
+                                    "Fecha de cumpleaños:"+cumple,"yelskamonfortesalon@gmail.com","yelskamonfortesalon@gmail.com"
+                    );
+                } catch (Exception e) {
+                    Log.e("SendMail", e.getMessage(), e);
+                }
 
                 existemail = false;
             } else {
@@ -239,49 +248,9 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
 
-    public class EnviarCorreoTask extends AsyncTask<Void, Void, Void> {
-        private ProgressDialog progressDialog;
-        private Context context;
 
-        public EnviarCorreoTask(ProgressDialog progressDialog, Context context) {
-            this.context = context;
-            this.progressDialog = progressDialog;
-        }
 
-        @Override
-        protected void onPreExecute() {
-            progressDialog.show();
-        }
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                GMailSender sender = new GMailSender("yelskamonfortesalon@gmail.com", "MonfortE2016AvilA");
-                sender.sendMail("Registro exitoso",
-                        "Gracias por registrarse en la app Yelska Monforte Salon",
-                        "yelskamonfortesalon@gmail.com", email
-                );
-                sender.sendMail("Nuevo usuario registrado",
-                        "Se registró el siguiente usuario:\n"+
-                                "Nombre:"+nombre+"\n"+
-                                "Apellido:"+apellidos+"\n"+
-                                "Móvil:"+telefono+"\n"+
-                                "Email:"+email+"\n"+
-                                "Fecha de cumpleaños:"+cumple,"yelskamonfortesalon@gmail.com","yelskamonfortesalon@gmail.com"
-                );
-            } catch (Exception e) {
-                Log.e("SendMail", e.getMessage(), e);
-            }
-        return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            progressDialog.dismiss();
-
-        }
 
     }
-}
-
 

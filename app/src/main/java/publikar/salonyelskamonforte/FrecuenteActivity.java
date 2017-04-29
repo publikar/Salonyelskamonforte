@@ -189,37 +189,69 @@ if(consultapassword())
             {
                 if(check1)
             {
-                chk1.setChecked(true);
+
                 check1=false;
             }
                 if(check2)
                 {
-                    chk2.setChecked(true);
+
                     check2=false;
                 }
                 if(check3)
                 {
-                    chk3.setChecked(true);
+
                     check3=false;
                 }
                 if(check4)
                 {
-                    chk4.setChecked(true);
+
                     check4=false;
                 }
                 if(check5)
                 {
-                    chk5.setChecked(true);
+
                     check5=false;
                 }
                 if(check6)
                 {
-                    chk6.setChecked(true);
+
                     check6=false;
                 }
 
 
+            }else
+            {
+                if(check1)
+                {
+                    chk1.setChecked(false);
+                }
+                if(check2)
+                {
+
+                    chk2.setChecked(false);
+                }
+                if(check3)
+                {
+
+                    chk3.setChecked(false);
+                }
+                if(check4)
+                {
+
+                    chk4.setChecked(false);
+                }
+                if(check5)
+                {
+
+                    chk5.setChecked(false);
+                }
+                if(check6)
+                {
+
+                    chk6.setChecked(false);
+                }
             }
+            progressDialog.dismiss();
         }
     }
 }
