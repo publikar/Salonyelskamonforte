@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import Objetos.Clientes;
+import Util.GMailSender;
 import WebService.RequestMethod;
 import WebService.RestClient;
 import WebService.WebUrl;
@@ -196,6 +197,23 @@ Boolean existemail=false;
         @Override
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
+            try {
+                GMailSender sender = new GMailSender("yelskamonfortesalon@gmail.com", "MonfortE2016AvilA");
+                sender.sendMail("Registro exitoso",
+                        "Gracias por registrarse en la app Yelska Monforte Salon",
+                        etxtemail.getText().toString()
+                        );
+                sender.sendMail("Nuevo usuario registrado",
+                        "Se registró el siguiente usuario:\n"+
+                        "Nombre:"+etxtnombre.getText().toString()+"\n"+
+                        "Apellido:"+etxtapellidos.getText().toString()+"\n"+
+                        "Móvil:"+etxttelefono.getText().toString()+"\n"+
+                        "Email:"+etxtemail.getText().toString()+"\n"+
+                        "Fecha de cumpleaños:"+txtcumple.getText().toString(),"yelskamonfortesalon@gmail.com"
+                        );
+            } catch (Exception e) {
+                Log.e("SendMail", e.getMessage(), e);
+            }
 
            /* String mailto = "mailto:" +etxtemail.getText().toString()+
                     "?cc=" + "yelskamonfortesalon@gmail.com" +
