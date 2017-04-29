@@ -31,9 +31,9 @@ import WebService.RestClient;
 import WebService.WebUrl;
 
 public class RegistroActivity extends AppCompatActivity {
-Boolean existemail=false;
+    Boolean existemail = false;
     EditText etxtnombre, etxtapellidos, etxttelefono, etxtemail, etxtpassword;
-    String nombre,apellidos,telefono,email,cumple,contrasenia;
+    String nombre, apellidos, telefono, email, cumple, contrasenia;
     TextView txtcumple;
     Button btnenviar;
     public int respuesta;
@@ -61,25 +61,31 @@ Boolean existemail=false;
                         || etxttelefono.getText().toString().matches("") || etxtemail.getText().toString().matches("")
                         || etxtpassword.getText().toString().matches("") ||
                         txtcumple.getText().toString().matches("Fecha de Cumpleaños"))) {
-nombre=etxtnombre.getText().toString();
-                    apellidos=etxtapellidos.getText().toString();
-                    telefono=etxttelefono.getText().toString();
-                    email=etxtemail.getText().toString();
-                    cumple=txtcumple.getText().toString();
-                    contrasenia=etxtpassword.getText().toString();
+                    nombre = etxtnombre.getText().toString();
+                    apellidos = etxtapellidos.getText().toString();
+                    telefono = etxttelefono.getText().toString();
+                    email = etxtemail.getText().toString();
+                    cumple = txtcumple.getText().toString();
+                    contrasenia = etxtpassword.getText().toString();
 
-                        request();
-                        ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
-                        progressDialog.setMessage("Enviando datos, por favor espere...");
-                        RegistroClienteTask registroClienteTask =
-                                new RegistroClienteTask(progressDialog, RegistroActivity.this);
-                        registroClienteTask.execute();
-                        //   limpiarCampos();
-                    } else
-                    {
-                        Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
+                    request();
+                    ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
+                    progressDialog.setMessage("Enviando datos, por favor espere...");
+                    RegistroClienteTask registroClienteTask =
+                            new RegistroClienteTask(progressDialog, RegistroActivity.this);
+                    registroClienteTask.execute();
 
-                    }
+
+                    progressDialog = new ProgressDialog(RegistroActivity.this);
+                    progressDialog.setMessage("Por favor espere...");
+                    EnviarCorreoTask enviarCorreoTask=
+                            new EnviarCorreoTask(progressDialog, RegistroActivity.this);
+                    enviarCorreoTask.execute();
+                    //   limpiarCampos();
+                } else {
+                    Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
+
+                }
 
             }
         });
@@ -127,8 +133,7 @@ nombre=etxtnombre.getText().toString();
         txtcumple.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private boolean emailexist()
-    {
+    private boolean emailexist() {
         restClient = new RestClient(WebUrl.webUrl + "existe_email.php");
         restClient.clearAddHeader();
         restClient.clearAddParam();
@@ -142,7 +147,7 @@ nombre=etxtnombre.getText().toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
-       return false;
+        return false;
     }
 
     private void request() {
@@ -163,7 +168,7 @@ nombre=etxtnombre.getText().toString();
 
         try {
             restClient.Execute(RequestMethod.POST);
-             respuesta=restClient.getResponseCode();
+            respuesta = restClient.getResponseCode();
             Log.d("Respuesta", Integer.toString(respuesta));
 
         } catch (Exception e) {
@@ -189,32 +194,15 @@ nombre=etxtnombre.getText().toString();
 
         @Override
         protected Void doInBackground(Void... params) {
-           if(! emailexist()) {
-               enviarRegistro();
-               try {
-                   GMailSender sender = new GMailSender("yelskamonfortesalon@gmail.com", "MonfortE2016AvilA");
-                   sender.sendMail("Registro exitoso",
-                           "Gracias por registrarse en la app Yelska Monforte Salon",
-                           "yelskamonfortesalon@gmail.com", email
-                   );
-                   sender.sendMail("Nuevo usuario registrado",
-                           "Se registró el siguiente usuario:\n"+
-                                   "Nombre:"+nombre+"\n"+
-                                   "Apellido:"+apellidos+"\n"+
-                                   "Móvil:"+telefono+"\n"+
-                                   "Email:"+email+"\n"+
-                                   "Fecha de cumpleaños:"+cumple,"yelskamonfortesalon@gmail.com","yelskamonfortesalon@gmail.com"
-                   );
-               } catch (Exception e) {
-                   Log.e("SendMail", e.getMessage(), e);
-               }
+            if (!emailexist()) {
+                enviarRegistro();
 
-               existemail=false;
-           }else
-           {
-               existemail=true;
 
-           }
+                existemail = false;
+            } else {
+                existemail = true;
+
+            }
             return null;
         }
 
@@ -226,31 +214,74 @@ nombre=etxtnombre.getText().toString();
                     "?cc=" + "yelskamonfortesalon@gmail.com" +
                     "&subject=" + Uri.encode("Se ha suscrito a Yelska Monforte Salon") +
                     "&body=" + Uri.encode("Gracias por suscribirse");*/
-           if(!existemail) {
-               if (respuesta == 200 || respuesta == 201) {
-                   Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                   limpiarCampos();
-                   //enviar correo electrónico
+            if (!existemail) {
+                if (respuesta == 200 || respuesta == 201) {
+                    Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    limpiarCampos();
+                    //enviar correo electrónico
 
                /* Intent intent=new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse(mailto));
                 startActivity(intent);*/
 
-                   Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
-                   startActivity(intent);
+                    Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
+                    startActivity(intent);
 
-               } else {
-                   Toast.makeText(context, "Ocurrió un error.Intente más tarde", Toast.LENGTH_SHORT).show();
-               }
-           }else
-           {
-               Toast.makeText(RegistroActivity.this,"Este email ya está registrado",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Ocurrió un error.Intente más tarde", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(RegistroActivity.this, "Este email ya está registrado", Toast.LENGTH_SHORT).show();
 
 
-           }
-           }
+            }
+        }
+    }
+
+
+    public class EnviarCorreoTask extends AsyncTask<Void, Void, Void> {
+        private ProgressDialog progressDialog;
+        private Context context;
+
+        public EnviarCorreoTask(ProgressDialog progressDialog, Context context) {
+            this.context = context;
+            this.progressDialog = progressDialog;
         }
 
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                GMailSender sender = new GMailSender("yelskamonfortesalon@gmail.com", "MonfortE2016AvilA");
+                sender.sendMail("Registro exitoso",
+                        "Gracias por registrarse en la app Yelska Monforte Salon",
+                        "yelskamonfortesalon@gmail.com", email
+                );
+                sender.sendMail("Nuevo usuario registrado",
+                        "Se registró el siguiente usuario:\n"+
+                                "Nombre:"+nombre+"\n"+
+                                "Apellido:"+apellidos+"\n"+
+                                "Móvil:"+telefono+"\n"+
+                                "Email:"+email+"\n"+
+                                "Fecha de cumpleaños:"+cumple,"yelskamonfortesalon@gmail.com","yelskamonfortesalon@gmail.com"
+                );
+            } catch (Exception e) {
+                Log.e("SendMail", e.getMessage(), e);
+            }
+        return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+
+        }
+
+    }
 }
 
 
