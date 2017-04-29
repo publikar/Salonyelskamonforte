@@ -16,9 +16,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import Objetos.Clientes;
 import WebService.RequestMethod;
 import WebService.RestClient;
 import WebService.WebUrl;
@@ -53,15 +59,20 @@ public class RegistroActivity extends AppCompatActivity {
                         || etxttelefono.getText().toString().matches("") || etxtemail.getText().toString().matches("")
                         || etxtpassword.getText().toString().matches("") ||
                         txtcumple.getText().toString().matches("Fecha de Cumpleaños"))) {
+                    if (!emailexist()) {
 
-                    request();
-                    ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
-                    progressDialog.setMessage("Enviando datos, por favor espere...");
-                    RegistroClienteTask registroClienteTask =
-                            new RegistroClienteTask(progressDialog, RegistroActivity.this);
-                    registroClienteTask.execute();
-                 //   limpiarCampos();
-                } else {
+                        request();
+                        ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
+                        progressDialog.setMessage("Enviando datos, por favor espere...");
+                        RegistroClienteTask registroClienteTask =
+                                new RegistroClienteTask(progressDialog, RegistroActivity.this);
+                        registroClienteTask.execute();
+                        //   limpiarCampos();
+                    } else
+                    {
+                        Toast.makeText(RegistroActivity.this,"Este email ya está registrado",Toast.LENGTH_SHORT).show();
+                    }
+                }else {
                     Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -110,6 +121,24 @@ public class RegistroActivity extends AppCompatActivity {
         txtcumple.setText(sdf.format(myCalendar.getTime()));
     }
 
+    private boolean emailexist()
+    {
+        restClient = new RestClient(WebUrl.webUrl + "existe_email.php");
+        restClient.clearAddHeader();
+        restClient.clearAddParam();
+        restClient.AddParam("email", etxtemail.getText().toString());
+        try {
+            restClient.Execute(RequestMethod.POST);
+            JSONArray json = new JSONArray(restClient.getResponse());
+            if (!json.isNull(0)) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       return false;
+    }
+
     private void request() {
         restClient = new RestClient(WebUrl.webUrl + "registro.php");
         restClient.clearAddHeader();
@@ -154,6 +183,7 @@ public class RegistroActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
+
             enviarRegistro();
             return null;
         }
