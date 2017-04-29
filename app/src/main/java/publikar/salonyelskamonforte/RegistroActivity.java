@@ -70,7 +70,8 @@ Boolean existemail=false;
                         //   limpiarCampos();
                     } else
                     {
-                        Toast.makeText(RegistroActivity.this,"Este email ya está registrado",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
+
                     }
 
             }
@@ -218,8 +219,9 @@ Boolean existemail=false;
                }
            }else
            {
+               Toast.makeText(RegistroActivity.this,"Este email ya está registrado",Toast.LENGTH_SHORT).show();
 
-               Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
+
            }
            }
         }
