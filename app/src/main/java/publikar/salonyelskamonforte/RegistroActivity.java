@@ -33,6 +33,7 @@ import WebService.WebUrl;
 public class RegistroActivity extends AppCompatActivity {
 Boolean existemail=false;
     EditText etxtnombre, etxtapellidos, etxttelefono, etxtemail, etxtpassword;
+    String nombre,apellidos,telefono,email,cumple,contrasenia;
     TextView txtcumple;
     Button btnenviar;
     public int respuesta;
@@ -60,7 +61,12 @@ Boolean existemail=false;
                         || etxttelefono.getText().toString().matches("") || etxtemail.getText().toString().matches("")
                         || etxtpassword.getText().toString().matches("") ||
                         txtcumple.getText().toString().matches("Fecha de Cumpleaños"))) {
-
+nombre=etxtnombre.getText().toString();
+                    apellidos=etxtapellidos.getText().toString();
+                    telefono=etxttelefono.getText().toString();
+                    email=etxtemail.getText().toString();
+                    cumple=txtcumple.getText().toString();
+                    contrasenia=etxtpassword.getText().toString();
 
                         request();
                         ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
@@ -185,6 +191,24 @@ Boolean existemail=false;
         protected Void doInBackground(Void... params) {
            if(! emailexist()) {
                enviarRegistro();
+               try {
+                   GMailSender sender = new GMailSender("yelskamonfortesalon@gmail.com", "MonfortE2016AvilA");
+                   sender.sendMail("Registro exitoso",
+                           "Gracias por registrarse en la app Yelska Monforte Salon",
+                           "yelskamonfortesalon@gmail.com", email
+                   );
+                   sender.sendMail("Nuevo usuario registrado",
+                           "Se registró el siguiente usuario:\n"+
+                                   "Nombre:"+nombre+"\n"+
+                                   "Apellido:"+apellidos+"\n"+
+                                   "Móvil:"+telefono+"\n"+
+                                   "Email:"+email+"\n"+
+                                   "Fecha de cumpleaños:"+cumple,"yelskamonfortesalon@gmail.com","yelskamonfortesalon@gmail.com"
+                   );
+               } catch (Exception e) {
+                   Log.e("SendMail", e.getMessage(), e);
+               }
+
                existemail=false;
            }else
            {
@@ -197,23 +221,6 @@ Boolean existemail=false;
         @Override
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
-            try {
-                GMailSender sender = new GMailSender("yelskamonfortesalon@gmail.com", "MonfortE2016AvilA");
-                sender.sendMail("Registro exitoso",
-                        "Gracias por registrarse en la app Yelska Monforte Salon",
-                        etxtemail.getText().toString()
-                        );
-                sender.sendMail("Nuevo usuario registrado",
-                        "Se registró el siguiente usuario:\n"+
-                        "Nombre:"+etxtnombre.getText().toString()+"\n"+
-                        "Apellido:"+etxtapellidos.getText().toString()+"\n"+
-                        "Móvil:"+etxttelefono.getText().toString()+"\n"+
-                        "Email:"+etxtemail.getText().toString()+"\n"+
-                        "Fecha de cumpleaños:"+txtcumple.getText().toString(),"yelskamonfortesalon@gmail.com"
-                        );
-            } catch (Exception e) {
-                Log.e("SendMail", e.getMessage(), e);
-            }
 
            /* String mailto = "mailto:" +etxtemail.getText().toString()+
                     "?cc=" + "yelskamonfortesalon@gmail.com" +
