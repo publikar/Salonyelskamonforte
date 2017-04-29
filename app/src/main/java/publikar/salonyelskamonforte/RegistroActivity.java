@@ -30,7 +30,7 @@ import WebService.RestClient;
 import WebService.WebUrl;
 
 public class RegistroActivity extends AppCompatActivity {
-
+Boolean existemail=false;
     EditText etxtnombre, etxtapellidos, etxttelefono, etxtemail, etxtpassword;
     TextView txtcumple;
     Button btnenviar;
@@ -59,7 +59,7 @@ public class RegistroActivity extends AppCompatActivity {
                         || etxttelefono.getText().toString().matches("") || etxtemail.getText().toString().matches("")
                         || etxtpassword.getText().toString().matches("") ||
                         txtcumple.getText().toString().matches("Fecha de Cumpleaños"))) {
-                    if (!emailexist()) {
+
 
                         request();
                         ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
@@ -72,9 +72,7 @@ public class RegistroActivity extends AppCompatActivity {
                     {
                         Toast.makeText(RegistroActivity.this,"Este email ya está registrado",Toast.LENGTH_SHORT).show();
                     }
-                }else {
-                    Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
         txtcumple = (TextView) findViewById(R.id.textCumpleaños);
@@ -183,8 +181,14 @@ public class RegistroActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
+           if(! emailexist()) {
+               enviarRegistro();
+               existemail=false;
+           }else
+           {
+               existemail=true;
 
-            enviarRegistro();
+           }
             return null;
         }
 
@@ -196,23 +200,30 @@ public class RegistroActivity extends AppCompatActivity {
                     "?cc=" + "yelskamonfortesalon@gmail.com" +
                     "&subject=" + Uri.encode("Se ha suscrito a Yelska Monforte Salon") +
                     "&body=" + Uri.encode("Gracias por suscribirse");*/
-            if (respuesta == 200 || respuesta == 201) {
-                Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                limpiarCampos();
-                //enviar correo electrónico
+           if(!existemail) {
+               if (respuesta == 200 || respuesta == 201) {
+                   Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                   limpiarCampos();
+                   //enviar correo electrónico
 
                /* Intent intent=new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse(mailto));
                 startActivity(intent);*/
 
-               Intent intent=new Intent(RegistroActivity.this,LoginActivity.class);
-                startActivity(intent);
+                   Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
+                   startActivity(intent);
 
-            } else {
-                Toast.makeText(context, "Ocurrió un error.Intente más tarde", Toast.LENGTH_SHORT).show();
-            }
+               } else {
+                   Toast.makeText(context, "Ocurrió un error.Intente más tarde", Toast.LENGTH_SHORT).show();
+               }
+           }else
+           {
+
+               Toast.makeText(RegistroActivity.this, "Llene todos los campos", Toast.LENGTH_SHORT).show();
+           }
+           }
         }
-    }
+
 }
 
 
