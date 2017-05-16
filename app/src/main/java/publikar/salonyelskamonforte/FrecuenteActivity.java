@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -274,6 +275,8 @@ if(consultapassword())
 
                     chk6.setChecked(false);
                 }
+
+                Toast.makeText(FrecuenteActivity.this,"Password incorrecto",Toast.LENGTH_SHORT).show();
             }
             progressDialog.dismiss();
         }
