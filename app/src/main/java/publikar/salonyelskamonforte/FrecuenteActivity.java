@@ -123,7 +123,10 @@ public class FrecuenteActivity extends AppCompatActivity {
                             consultarPassTask.execute();
                         }else
                         {
+
                             dialog.cancel();
+                            uncheck();
+
                         }
 
                     }
@@ -132,6 +135,9 @@ public class FrecuenteActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
+                                              uncheck();
+
+
                             }
                         });
 
@@ -140,6 +146,24 @@ public class FrecuenteActivity extends AppCompatActivity {
         alert.show();
     }
 
+    private void uncheck()
+    {
+if(check1) {
+    chk1.setChecked(false);
+}
+if(check2)
+{chk2.setChecked(false);}
+        if(check3)
+        {
+            chk3.setChecked(false);
+        }
+        if(check4)
+        {chk4.setChecked(false);}
+        if(check5)
+        {chk5.setChecked(false);}
+if(check6)
+{chk6.setChecked(false);}
+    }
 
     public boolean consultapassword() {
 
