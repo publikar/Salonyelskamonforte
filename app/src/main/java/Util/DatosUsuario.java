@@ -13,6 +13,7 @@ public class DatosUsuario {
 
 
     private static final String PREFERENCE_NAME="user_preferences";
+    private static final String USER_ID="user_id";
     private static final String USER_NAME="user_name";
     private static final String USER_LASTNAME="user_lastname";
     private static final String USER_EMAIL="user_email";
@@ -29,6 +30,13 @@ public class DatosUsuario {
         editor=preferences.edit();
 
     }
+
+    public void setUserId(int id)
+    {
+        editor.putInt(USER_ID,id);
+        editor.commit();
+    }
+    public int getUserId(){return preferences.getInt(USER_ID,0);}
 
     public void setUserName(String username)
     {
@@ -99,6 +107,7 @@ public class DatosUsuario {
 
     public void saveCliente(Clientes cliente)
     {
+        setUserId(cliente.getIdclientes());
         setUserName(cliente.getNombre());
         setUserLastname(cliente.getApellidos());
         setUserEmail(cliente.getEmail());

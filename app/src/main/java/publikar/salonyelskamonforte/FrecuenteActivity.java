@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import Util.DatosUsuario;
 import WebService.RequestMethod;
@@ -41,6 +42,14 @@ DatosUsuario datosusuario;
         chk5=(CheckBox)findViewById(R.id.checkBox5);
         chk6=(CheckBox)findViewById(R.id.checkBox6);
 datosusuario=new DatosUsuario(FrecuenteActivity.this);
+
+        ProgressDialog progressDialog = new ProgressDialog(FrecuenteActivity.this);
+        progressDialog.setMessage("Consultando, por favor espere...");
+        ConsultarVisitasTask consultarVisitasTask =
+                new ConsultarVisitasTask(progressDialog, FrecuenteActivity.this);
+        consultarVisitasTask.execute();
+
+
         chk1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,16 +180,26 @@ if(check6)
 
     private void cargarvisitas()
     {
-       restClient = new RestClient(WebUrl.webUrl + "frecuentes.php");
+       restClient = new RestClient(WebUrl.webUrl + "verVisitas.php");
             restClient.clearAddHeader();
             restClient.clearAddParam();
             restClient.AddParam("idcliente",Integer.toString(
                     datosusuario.getUserId()));
-        restClient.AddParam("nvisita",Integer.toString(nvisitas));
+
         try {
             restClient.Execute(RequestMethod.POST);
             JSONArray json = new JSONArray(restClient.getResponse());
+            if (!json.isNull(0)) {
 
+                for (int i = 0; i < json.length(); i++) {
+
+                    JSONObject job = null;
+
+                    job = json.getJSONObject(i);
+                    job.getInt("nvisitas");
+
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,7 +234,7 @@ if(check6)
 
         @Override
         protected Void doInBackground(Void... params) {
-            cargarvisitas();
+
 if(consultapassword())
 {
     passwordok=true;
@@ -278,6 +297,37 @@ if(consultapassword())
 
                 Toast.makeText(FrecuenteActivity.this,"Password incorrecto",Toast.LENGTH_SHORT).show();
             }
+            progressDialog.dismiss();
+        }
+    }
+
+
+    public class ConsultarVisitasTask extends AsyncTask<Void, Void, Void> {
+        private ProgressDialog progressDialog;
+        private Context context;
+
+        public ConsultarVisitasTask(ProgressDialog progressDialog, Context context) {
+            this.context = context;
+            this.progressDialog = progressDialog;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            cargarvisitas();
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
             progressDialog.dismiss();
         }
     }
