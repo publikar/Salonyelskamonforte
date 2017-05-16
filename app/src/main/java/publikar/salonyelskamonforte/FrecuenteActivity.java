@@ -174,9 +174,9 @@ if(check6)
        restClient = new RestClient(WebUrl.webUrl + "frecuentes.php");
             restClient.clearAddHeader();
             restClient.clearAddParam();
-            restClient.AddParam("idclientes",Integer.toString(
+            restClient.AddParam("idcliente",Integer.toString(
                     datosusuario.getUserId()));
-        restClient.AddParam("nvisitas",Integer.toString(nvisitas));
+        restClient.AddParam("nvisita",Integer.toString(nvisitas));
         try {
             restClient.Execute(RequestMethod.POST);
             JSONArray json = new JSONArray(restClient.getResponse());
