@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 
+import Util.DatosUsuario;
 import WebService.RequestMethod;
 import WebService.RestClient;
 import WebService.WebUrl;
@@ -26,7 +27,8 @@ public class FrecuenteActivity extends AppCompatActivity {
     RestClient restClient;
     Boolean passwordok=false,check1=false,check2=false,check3=false,check4=false,check5=false,
     check6=false;
-
+DatosUsuario datosusuario;
+    int nvisitas=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class FrecuenteActivity extends AppCompatActivity {
         chk4=(CheckBox)findViewById(R.id.checkBox4);
         chk5=(CheckBox)findViewById(R.id.checkBox5);
         chk6=(CheckBox)findViewById(R.id.checkBox6);
-
+datosusuario=new DatosUsuario(FrecuenteActivity.this);
         chk1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +168,26 @@ if(check6)
 {chk6.setChecked(false);}
     }
 
+
+    private void cargarvisitas()
+    {
+       restClient = new RestClient(WebUrl.webUrl + "frecuentes.php");
+            restClient.clearAddHeader();
+            restClient.clearAddParam();
+            restClient.AddParam("idclientes",Integer.toString(
+                    datosusuario.getUserId()));
+        restClient.AddParam("nvisitas",Integer.toString(nvisitas));
+        try {
+            restClient.Execute(RequestMethod.POST);
+            JSONArray json = new JSONArray(restClient.getResponse());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public boolean consultapassword() {
 
         try {
@@ -193,6 +215,7 @@ if(check6)
 
         @Override
         protected Void doInBackground(Void... params) {
+            cargarvisitas();
 if(consultapassword())
 {
     passwordok=true;
@@ -214,31 +237,36 @@ if(consultapassword())
             {
                 if(check1)
             {
+                nvisitas=1;
 
                 check1=false;
             }
                 if(check2)
                 {
+                    nvisitas=2;
 
                     check2=false;
                 }
                 if(check3)
                 {
+                    nvisitas=3;
 
                     check3=false;
                 }
                 if(check4)
                 {
+                    nvisitas=4;
 
                     check4=false;
                 }
                 if(check5)
                 {
+                    nvisitas=5;
 
                     check5=false;
                 }
                 if(check6)
-                {
+                {nvisitas=6;
 
                     check6=false;
                 }
@@ -246,35 +274,7 @@ if(consultapassword())
 
             }else
             {
-                if(check1)
-                {
-                    chk1.setChecked(false);
-                }
-                if(check2)
-                {
-
-                    chk2.setChecked(false);
-                }
-                if(check3)
-                {
-
-                    chk3.setChecked(false);
-                }
-                if(check4)
-                {
-
-                    chk4.setChecked(false);
-                }
-                if(check5)
-                {
-
-                    chk5.setChecked(false);
-                }
-                if(check6)
-                {
-
-                    chk6.setChecked(false);
-                }
+                uncheck();
 
                 Toast.makeText(FrecuenteActivity.this,"Password incorrecto",Toast.LENGTH_SHORT).show();
             }
