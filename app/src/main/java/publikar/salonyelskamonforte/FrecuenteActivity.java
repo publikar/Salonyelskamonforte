@@ -362,21 +362,31 @@ if(consultapassword())
             {
                 case 1:
                     chk1.setChecked(true);
+                    chk1.setEnabled(false);
                     break;
                 case 2:
                     chk1.setChecked(true);
                     chk2.setChecked(true);
+                    chk1.setEnabled(false);
+                    chk2.setEnabled(false);
                     break;
                 case 3:
                     chk1.setChecked(true);
                     chk2.setChecked(true);
                     chk3.setChecked(true);
+                    chk1.setEnabled(false);
+                    chk2.setEnabled(false);
+                    chk3.setEnabled(false);
                     break;
                 case 4:
                     chk1.setChecked(true);
                     chk2.setChecked(true);
                     chk3.setChecked(true);
                     chk4.setChecked(true);
+                    chk1.setEnabled(false);
+                    chk2.setEnabled(false);
+                    chk3.setEnabled(false);
+                    chk4.setEnabled(false);
                     break;
                 case 5:
                     chk1.setChecked(true);
@@ -384,6 +394,11 @@ if(consultapassword())
                     chk3.setChecked(true);
                     chk4.setChecked(true);
                     chk5.setChecked(true);
+                    chk1.setEnabled(false);
+                    chk2.setEnabled(false);
+                    chk3.setEnabled(false);
+                    chk4.setEnabled(false);
+                    chk5.setEnabled(false);
                     break;
                 case 6:
                     chk1.setChecked(true);
@@ -392,6 +407,12 @@ if(consultapassword())
                     chk4.setChecked(true);
                     chk5.setChecked(true);
                     chk6.setChecked(true);
+                    chk1.setEnabled(false);
+                    chk2.setEnabled(false);
+                    chk3.setEnabled(false);
+                    chk4.setEnabled(false);
+                    chk5.setEnabled(false);
+                    chk6.setEnabled(false);
                     break;
             }
             progressDialog.dismiss();
