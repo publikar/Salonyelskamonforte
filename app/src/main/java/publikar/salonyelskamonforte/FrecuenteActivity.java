@@ -304,11 +304,17 @@ if(consultapassword())
                     nvisitas=5;
 
                     check5=false;
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FrecuenteActivity.this);
+                    alertDialogBuilder.setTitle("¡Felicidades!");
+                    alertDialogBuilder.setMessage("Tu próximo servicio es gratis");
+                    alertDialogBuilder.setIcon(android.R.drawable.ic_dialog_alert).show();
                 }
                 if(check6)
-                {nvisitas=6;
+                {nvisitas=0;
+
 
                     check6=false;
+
                 }
 
                if(insertarVisitas())
