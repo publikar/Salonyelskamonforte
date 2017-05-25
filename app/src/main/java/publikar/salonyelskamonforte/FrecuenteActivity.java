@@ -188,11 +188,10 @@ if(check6)
         restClient.AddParam("nvisita",Integer.toString(nvisitas));
         try {
             restClient.Execute(RequestMethod.POST);
-            String res = restClient.getResponse();
-            if (res!="") {
+            String res = restClient.getResponse().trim();
+            if (res.equals("true")) {
 return true;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
