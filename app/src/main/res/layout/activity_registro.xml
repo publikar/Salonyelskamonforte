@@ -14,7 +14,7 @@ android:background="@drawable/fondogral2"
 
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:padding="20dp"
+    android:padding="70dp"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:background="@drawable/fondogral2"
@@ -22,7 +22,7 @@ android:background="@drawable/fondogral2"
 
     <EditText
         android:id="@+id/txtNombre"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Ingrese su Nombre"
@@ -35,7 +35,7 @@ android:background="@drawable/fondogral2"
     </EditText>
     <EditText
         android:id="@+id/editApellido"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Ingrese su Apellido"
@@ -45,7 +45,7 @@ android:background="@drawable/fondogral2"
         />
     <EditText
         android:id="@+id/editMovil"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Móvil"
@@ -56,7 +56,7 @@ android:background="@drawable/fondogral2"
 
     <EditText
         android:id="@+id/editEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email"
@@ -67,7 +67,7 @@ android:background="@drawable/fondogral2"
 
     <EditText
         android:id="@+id/editPassNum"
-        android:layout_width="290dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Elige Password (Solo Numeros)"
@@ -79,7 +79,7 @@ android:background="@drawable/fondogral2"
 
     <TextView
         android:id="@+id/textCumpleaños"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Fecha de Cumpleaños"
         android:textAlignment="center"
