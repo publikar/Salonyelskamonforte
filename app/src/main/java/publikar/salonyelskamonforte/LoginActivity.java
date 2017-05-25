@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editEmail;
     EditText editPass;
     RestClient restClient;
-    Boolean existe=false;
+    Boolean existe = false;
     CheckBox chkrecordar;
     DatosUsuario datosUsuario;
 
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPass = (EditText) findViewById(R.id.editPass);
-chkrecordar=(CheckBox)findViewById(R.id.chkRecordar);
+        chkrecordar = (CheckBox) findViewById(R.id.chkRecordar);
         btnok = (Button) findViewById(R.id.buttonEnter);
         btnok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,16 +55,15 @@ chkrecordar=(CheckBox)findViewById(R.id.chkRecordar);
                             new LoginTask(progressDialog, LoginActivity.this);
                     loginTask.execute();
 
-                }else
-                {
-                    Toast.makeText(LoginActivity.this,"Ingrese usuario y contraseña",
+                } else {
+                    Toast.makeText(LoginActivity.this, "Ingrese usuario y contraseña",
                             Toast.LENGTH_SHORT).show();
                 }
 
 
             }
         });
-datosUsuario=new DatosUsuario(this);
+        datosUsuario = new DatosUsuario(this);
 
 
         //  Intent intent = new Intent(this, MenugralActivity.class);
@@ -82,7 +81,7 @@ datosUsuario=new DatosUsuario(this);
     }
 
     private void login() {
-        Clientes clientes=null;
+        Clientes clientes = null;
         try {
 
             restClient.Execute(RequestMethod.POST);
@@ -90,7 +89,7 @@ datosUsuario=new DatosUsuario(this);
             if (!json.isNull(0)) {
                 try {
                     for (int i = 0; i < json.length(); i++) {
-                        existe=true;
+                        existe = true;
                         JSONObject job = null;
                         clientes = new Clientes();
                         job = json.getJSONObject(i);
@@ -106,15 +105,20 @@ datosUsuario=new DatosUsuario(this);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }else{existe=false;}
+            } else {
+                existe = false;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(chkrecordar.isChecked())
-        {if(clientes!=null) {
-            datosUsuario.saveCliente(clientes);
-        }
+        if (clientes != null) {
+            if (chkrecordar.isChecked()) {
+                datosUsuario.saveCliente(clientes);
+            } else {
+
+                datosUsuario.setUserId(clientes.getIdclientes());
+            }
 
         }
     }
@@ -144,13 +148,12 @@ datosUsuario=new DatosUsuario(this);
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.dismiss();
-            if(existe) {
-              //  existe=false;
+            if (existe) {
+                //  existe=false;
                 Intent intent = new Intent(LoginActivity.this, MenugralActivity.class);
                 startActivity(intent);
-            }else
-            {
-                Toast.makeText(LoginActivity.this,"Este usuario no existe",
+            } else {
+                Toast.makeText(LoginActivity.this, "Este usuario no existe",
                         Toast.LENGTH_SHORT).show();
             }
 
