@@ -190,15 +190,16 @@ if(check6)
             restClient.Execute(RequestMethod.POST);
             JSONArray json = new JSONArray(restClient.getResponse());
             if (!json.isNull(0)) {
-
+                JSONObject job = null;
                 for (int i = 0; i < json.length(); i++) {
 
-                    JSONObject job = null;
+
 
                     job = json.getJSONObject(i);
-                    job.getInt("nvisitas");
+
 
                 }
+                nvisitas=job.getInt("nvisitas");
             }
 
         } catch (Exception e) {
@@ -328,6 +329,42 @@ if(consultapassword())
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+            switch(nvisitas)
+            {
+                case 1:
+                    chk1.setChecked(true);
+                    break;
+                case 2:
+                    chk1.setChecked(true);
+                    chk2.setChecked(true);
+                    break;
+                case 3:
+                    chk1.setChecked(true);
+                    chk2.setChecked(true);
+                    chk3.setChecked(true);
+                    break;
+                case 4:
+                    chk1.setChecked(true);
+                    chk2.setChecked(true);
+                    chk3.setChecked(true);
+                    chk4.setChecked(true);
+                    break;
+                case 5:
+                    chk1.setChecked(true);
+                    chk2.setChecked(true);
+                    chk3.setChecked(true);
+                    chk4.setChecked(true);
+                    chk5.setChecked(true);
+                    break;
+                case 6:
+                    chk1.setChecked(true);
+                    chk2.setChecked(true);
+                    chk3.setChecked(true);
+                    chk4.setChecked(true);
+                    chk5.setChecked(true);
+                    chk6.setChecked(true);
+                    break;
+            }
             progressDialog.dismiss();
         }
     }
