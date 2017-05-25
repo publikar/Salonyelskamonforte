@@ -178,6 +178,27 @@ if(check6)
     }
 
 
+    private boolean insertarVisitas()
+    {
+        restClient = new RestClient(WebUrl.webUrl + "frecuentes.php");
+        restClient.clearAddHeader();
+        restClient.clearAddParam();
+        restClient.AddParam("idcliente",Integer.toString(
+                datosusuario.getUserId()));
+        restClient.AddParam("nvisita",Integer.toString(nvisitas));
+        try {
+            restClient.Execute(RequestMethod.POST);
+            JSONArray json = new JSONArray(restClient.getResponse());
+            if (!json.isNull(0)) {
+return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+return false;
+    }
+
     private void cargarvisitas()
     {
        restClient = new RestClient(WebUrl.webUrl + "verVisitas.php");
@@ -290,6 +311,15 @@ if(consultapassword())
 
                     check6=false;
                 }
+
+               if(insertarVisitas())
+               {
+                  Toast.makeText(FrecuenteActivity.this,"Visita registrada",Toast.LENGTH_SHORT).show();
+               }else
+               {
+                   Toast.makeText(FrecuenteActivity.this,"La visita no fue registrada. Intente nuevamente",
+                           Toast.LENGTH_SHORT).show();
+               }
 
 
             }else
