@@ -188,8 +188,8 @@ if(check6)
         restClient.AddParam("nvisita",Integer.toString(nvisitas));
         try {
             restClient.Execute(RequestMethod.POST);
-            JSONArray json = new JSONArray(restClient.getResponse());
-            if (!json.isNull(0)) {
+            String res = restClient.getResponse();
+            if (res!="") {
 return true;
             }
 
