@@ -104,12 +104,17 @@ revisarvisitas();
 
 private void revisarvisitas()
 {
-    //Consulta al servidor cuántas visitas tiene el usuario
-    ProgressDialog progressDialog = new ProgressDialog(FrecuenteActivity.this);
-    progressDialog.setMessage("Consultando, por favor espere...");
-    ConsultarVisitasTask consultarVisitasTask =
-            new ConsultarVisitasTask(progressDialog, FrecuenteActivity.this);
-    consultarVisitasTask.execute();
+    if(Util.Util.checkInternetConnection(FrecuenteActivity.this)) {
+        //Consulta al servidor cuántas visitas tiene el usuario
+        ProgressDialog progressDialog = new ProgressDialog(FrecuenteActivity.this);
+        progressDialog.setMessage("Consultando, por favor espere...");
+        ConsultarVisitasTask consultarVisitasTask =
+                new ConsultarVisitasTask(progressDialog, FrecuenteActivity.this);
+        consultarVisitasTask.execute();
+    }else
+    {
+        nvisitas=datosusuario.getUserVisit();
+    }
 }
 
     protected void showInputDialog() {
@@ -342,6 +347,7 @@ if(consultapassword())
                if(insertarVisitas())
                {
                   Toast.makeText(FrecuenteActivity.this,"Visita registrada",Toast.LENGTH_SHORT).show();
+                   datosusuario.setUserVisit(nvisitas);
                    revisarvisitas();
                }else
                {
@@ -464,6 +470,8 @@ if(consultapassword())
                     chk6.setEnabled(false);
                     break;
             }
+            //Guarde en shared preferences las visitas
+            datosusuario.setUserVisit(nvisitas);
             progressDialog.dismiss();
         }
     }
