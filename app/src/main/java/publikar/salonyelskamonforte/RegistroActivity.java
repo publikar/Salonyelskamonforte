@@ -68,7 +68,7 @@ public class RegistroActivity extends AppCompatActivity {
                     cumple = txtcumple.getText().toString();
                     contrasenia = etxtpassword.getText().toString();
 
-
+//Registro de clientes
                     ProgressDialog progressDialog = new ProgressDialog(RegistroActivity.this);
                     progressDialog.setMessage("Enviando datos, por favor espere...");
                     RegistroClienteTask registroClienteTask =

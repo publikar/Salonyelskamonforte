@@ -20,6 +20,7 @@ public class DatosUsuario {
     private static final String USER_MOVIL="user_movil";
     private static final String USER_BIRTHDAY="user_birthday";
     private static final String USER_PASSWORD="user_password";
+    private static final String USER_VISIT="user_visits";
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -104,6 +105,15 @@ public class DatosUsuario {
         return preferences.getString(USER_PASSWORD,"");
     }
 
+    public void setUserVisit(int nvisit)
+    {
+        editor.putInt(USER_VISIT,nvisit).commit();
+    }
+
+    public int getUserVisit()
+    {
+        return preferences.getInt(USER_VISIT,0);
+    }
 
     public void saveCliente(Clientes cliente)
     {

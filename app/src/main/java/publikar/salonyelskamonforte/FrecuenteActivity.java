@@ -43,16 +43,13 @@ DatosUsuario datosusuario;
         chk6=(CheckBox)findViewById(R.id.checkBox6);
 datosusuario=new DatosUsuario(FrecuenteActivity.this);
 
-        ProgressDialog progressDialog = new ProgressDialog(FrecuenteActivity.this);
-        progressDialog.setMessage("Consultando, por favor espere...");
-        ConsultarVisitasTask consultarVisitasTask =
-                new ConsultarVisitasTask(progressDialog, FrecuenteActivity.this);
-        consultarVisitasTask.execute();
+revisarvisitas();
 
 
         chk1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 check1=true;
 
                 showInputDialog();
@@ -105,7 +102,15 @@ datosusuario=new DatosUsuario(FrecuenteActivity.this);
 
 
 
-
+private void revisarvisitas()
+{
+    //Consulta al servidor cuántas visitas tiene el usuario
+    ProgressDialog progressDialog = new ProgressDialog(FrecuenteActivity.this);
+    progressDialog.setMessage("Consultando, por favor espere...");
+    ConsultarVisitasTask consultarVisitasTask =
+            new ConsultarVisitasTask(progressDialog, FrecuenteActivity.this);
+    consultarVisitasTask.execute();
+}
 
     protected void showInputDialog() {
 
@@ -127,7 +132,7 @@ datosusuario=new DatosUsuario(FrecuenteActivity.this);
                             restClient.clearAddHeader();
                             restClient.clearAddParam();
                             restClient.AddParam("password", etxtpassword.getText().toString());
-
+//Verificar password de administrador
                             ProgressDialog progressDialog = new ProgressDialog(FrecuenteActivity.this);
                             progressDialog.setMessage("Consultando, por favor espere...");
                             ConsultarPassTask consultarPassTask =
@@ -178,6 +183,7 @@ if(check6)
     }
 
 
+    //actualiza las visitas en el servidor
     private boolean insertarVisitas()
     {
         restClient = new RestClient(WebUrl.webUrl + "frecuentes.php");
@@ -198,6 +204,7 @@ return true;
 return false;
     }
 
+    //Revisar en el servidor cuantas visitas tiene el usuario
     private void cargarvisitas()
     {
        restClient = new RestClient(WebUrl.webUrl + "verVisitas.php");
@@ -228,6 +235,17 @@ return false;
 
     }
 
+    private void bloquearchecks()
+    {
+
+
+
+        chk2.setEnabled(false);
+        chk3.setEnabled(false);
+        chk4.setEnabled(false);
+        chk5.setEnabled(false);
+        chk6.setEnabled(false);
+    }
     public boolean consultapassword() {
 
         try {
@@ -244,6 +262,9 @@ return false;
 
 
     }
+
+
+
     public class ConsultarPassTask extends AsyncTask<Void, Void, Void> {
         private ProgressDialog progressDialog;
         private Context context;
@@ -280,6 +301,7 @@ if(consultapassword())
                 nvisitas=1;
 
                 check1=false;
+
             }
                 if(check2)
                 {
@@ -320,6 +342,7 @@ if(consultapassword())
                if(insertarVisitas())
                {
                   Toast.makeText(FrecuenteActivity.this,"Visita registrada",Toast.LENGTH_SHORT).show();
+                   revisarvisitas();
                }else
                {
                    Toast.makeText(FrecuenteActivity.this,"La visita no fue registrada. Intente nuevamente",
@@ -329,6 +352,7 @@ if(consultapassword())
 
             }else
             {
+                //Si el password no es correcto despalomea el check
                 uncheck();
 
                 Toast.makeText(FrecuenteActivity.this,"Password incorrecto",Toast.LENGTH_SHORT).show();
@@ -366,15 +390,21 @@ if(consultapassword())
 
             switch(nvisitas)
             {
+                case 0:
+                    bloquearchecks();
+                    break;
                 case 1:
                     chk1.setChecked(true);
                     chk1.setEnabled(false);
+                    chk2.setEnabled(true);
+
                     break;
                 case 2:
                     chk1.setChecked(true);
                     chk2.setChecked(true);
                     chk1.setEnabled(false);
                     chk2.setEnabled(false);
+                    chk3.setEnabled(true);
                     break;
                 case 3:
                     chk1.setChecked(true);
@@ -383,6 +413,7 @@ if(consultapassword())
                     chk1.setEnabled(false);
                     chk2.setEnabled(false);
                     chk3.setEnabled(false);
+                    chk4.setEnabled(true);
                     break;
                 case 4:
                     chk1.setChecked(true);
@@ -393,6 +424,7 @@ if(consultapassword())
                     chk2.setEnabled(false);
                     chk3.setEnabled(false);
                     chk4.setEnabled(false);
+                    chk5.setEnabled(true);
                     break;
                 case 5:
                     chk1.setChecked(true);
@@ -405,6 +437,7 @@ if(consultapassword())
                     chk3.setEnabled(false);
                     chk4.setEnabled(false);
                     chk5.setEnabled(false);
+                    chk6.setEnabled(true);
                     break;
                 case 6:
                     chk1.setChecked(true);
