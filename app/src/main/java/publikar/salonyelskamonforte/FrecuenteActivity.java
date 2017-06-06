@@ -397,6 +397,10 @@ if(consultapassword())
                     chk1.setChecked(true);
                     chk1.setEnabled(false);
                     chk2.setEnabled(true);
+                    chk3.setEnabled(false);
+                    chk4.setEnabled(false);
+                    chk5.setEnabled(false);
+                    chk6.setEnabled(false);
 
                     break;
                 case 2:
