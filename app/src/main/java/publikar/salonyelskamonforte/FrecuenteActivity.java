@@ -405,6 +405,9 @@ if(consultapassword())
                     chk1.setEnabled(false);
                     chk2.setEnabled(false);
                     chk3.setEnabled(true);
+                    chk4.setEnabled(false);
+                    chk5.setEnabled(false);
+                    chk6.setEnabled(false);
                     break;
                 case 3:
                     chk1.setChecked(true);
@@ -414,6 +417,8 @@ if(consultapassword())
                     chk2.setEnabled(false);
                     chk3.setEnabled(false);
                     chk4.setEnabled(true);
+                    chk5.setEnabled(false);
+                    chk6.setEnabled(false);
                     break;
                 case 4:
                     chk1.setChecked(true);
@@ -425,6 +430,7 @@ if(consultapassword())
                     chk3.setEnabled(false);
                     chk4.setEnabled(false);
                     chk5.setEnabled(true);
+                    chk6.setEnabled(false);
                     break;
                 case 5:
                     chk1.setChecked(true);
