@@ -31,7 +31,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:10.2.1'
     compile 'com.sun.mail:android-mail:1.5.5'
     compile 'com.sun.mail:android-activation:1.5.5'
-
+    compile 'com.google.android.gms:play-services-location:10.2.1'
 
     testCompile 'junit:junit:4.12'
 }
