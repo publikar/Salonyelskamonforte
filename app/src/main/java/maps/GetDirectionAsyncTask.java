@@ -11,6 +11,8 @@ import org.w3c.dom.Document;
 import java.util.ArrayList;
 import java.util.Map;
 
+import publikar.salonyelskamonforte.MapsActivity;
+
 /**
  * Created by A on 21/04/2016.
  */
@@ -70,7 +72,7 @@ public class GetDirectionAsyncTask extends AsyncTask<Map<String,String>,Object,
         progressDialog.dismiss();
         if(exception==null)
         {
-            activity.handleGetDirectionsResult(latLngs);
+           // activity.handleGetDirectionsResult(latLngs);
         }
         else
         {
