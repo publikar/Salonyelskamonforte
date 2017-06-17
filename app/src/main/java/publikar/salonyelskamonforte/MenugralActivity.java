@@ -61,7 +61,7 @@ public class MenugralActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                 Intent intentLog = new Intent(MenugralActivity.this, LlegaActivity.class);
+                 Intent intentLog = new Intent(MenugralActivity.this, MapsActivity.class);
                   startActivity(intentLog);
 
 

@@ -66,8 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
        // btnNavegar = (Button) findViewById(R.id.btnNavegar);
         getScreenDim();
-        encontrarDireccion(MIUBICACION.latitude, MIUBICACION.longitude,
-                SALON.latitude, SALON.longitude, GMapV2Direction.MODE_DRIVING);
+
        /* btnNavegar.setOnClickListener(new View.OnClickListener() {
          //   @Override
           public void onClick(View v) {
@@ -105,6 +104,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         requestpermission();
+        mMap.setMyLocationEnabled(true);
+
         mMap.addMarker(new MarkerOptions().position(SALON).title("Salón Yelska Monforte"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(SALON));
     }
@@ -209,6 +210,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             MIUBICACION=new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+
         }
     }
 
