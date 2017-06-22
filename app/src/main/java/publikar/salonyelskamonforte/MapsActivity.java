@@ -1,9 +1,13 @@
 package publikar.salonyelskamonforte;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -37,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private LatLngBounds latLngBounds;
+    LocationManager locationManager;
     private Polyline polyline;
     private Button btnNavegar;
     private int width, height;
@@ -54,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
 
 
         if (mGoogleApiClient == null) {
@@ -66,6 +71,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
        // btnNavegar = (Button) findViewById(R.id.btnNavegar);
         getScreenDim();
+
+        try {
+            locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(myIntent);
+                overridePendingTransition(R.animator.push_up_in,
+                        R.animator.push_up_out);
+            } else {
+                mapFragment.getMapAsync(this);
+                overridePendingTransition(R.animator.push_up_in,
+                        R.animator.push_up_out);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
        /* btnNavegar.setOnClickListener(new View.OnClickListener() {
          //   @Override
@@ -108,6 +130,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.addMarker(new MarkerOptions().position(SALON).title("Salón Yelska Monforte"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(SALON));
+
+
+
+
     }
 
 
@@ -181,6 +207,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
@@ -210,6 +244,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             MIUBICACION=new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+            encontrarDireccion(MIUBICACION.latitude,MIUBICACION.longitude,SALON.latitude,SALON.longitude,GMapV2Direction.MODE_DRIVING);
 
         }
     }

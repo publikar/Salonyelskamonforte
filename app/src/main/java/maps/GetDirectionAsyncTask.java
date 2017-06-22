@@ -72,7 +72,7 @@ public class GetDirectionAsyncTask extends AsyncTask<Map<String,String>,Object,
         progressDialog.dismiss();
         if(exception==null)
         {
-           // activity.handleGetDirectionsResult(latLngs);
+           activity.handleGetDirectionsResult(latLngs);
         }
         else
         {
