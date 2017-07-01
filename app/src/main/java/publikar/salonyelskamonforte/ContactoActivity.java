@@ -60,6 +60,11 @@ TextView txtfacebook,txtwhatsapp,txtdireccion,txtemail;
         startActivity(facebookIntent);
     }
 
+    public void abrirwhatsapp(View v)
+    {
+        Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+        startActivity(launchIntent);
+    }
 
     private String getFacebookPageURL(Context context) {
         PackageManager packageManager = context.getPackageManager();

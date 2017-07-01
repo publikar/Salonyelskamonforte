@@ -6,111 +6,94 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondogral2"
     tools:context="publikar.salonyelskamonforte.ContactoActivity"
-    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteY="89dp"
     tools:layout_editor_absoluteX="0dp">
 
     <ImageView
         android:id="@+id/faceicon"
         android:layout_width="89dp"
-        android:layout_height="88dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="117dp"
         android:onClick="abrirface"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.078"
         app:srcCompat="@drawable/facebook_icon"
-        android:layout_marginBottom="8dp" />
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp" />
 
     <TextView
         android:id="@+id/txtface"
         android:layout_width="247dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="23dp"
-
-        android:layout_marginStart="8dp"
+        android:layout_height="31dp"
 
         android:onClick="abrirface"
         android:text="YelskaMonforteSalonTanlum"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textStyle="bold"
+        android:layout_marginBottom="106dp"
+        app:layout_constraintBottom_toTopOf="@+id/txttel"
         app:layout_constraintLeft_toRightOf="@+id/faceicon"
-        android:layout_marginBottom="89dp"
-        app:layout_constraintBottom_toTopOf="@+id/txttel" />
+        android:layout_marginLeft="8dp" />
 
     <ImageView
         android:id="@+id/whatsappicon"
         android:layout_width="85dp"
-        android:layout_height="72dp"
-        app:srcCompat="@drawable/whatsappicon"
+        android:layout_height="118dp"
+        android:onClick="abrirwhatsapp"
         app:layout_constraintLeft_toLeftOf="@+id/faceicon"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/direccicon" />
+        app:srcCompat="@drawable/whatsappicon"
+        tools:layout_editor_absoluteY="133dp" />
 
     <TextView
         android:id="@+id/txttel"
         android:layout_width="251dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="110dp"
+        android:layout_marginLeft="8dp"
+        android:onClick="abrirwhatsapp"
         android:text="9991010967"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="@+id/txtface"
-        app:layout_constraintLeft_toLeftOf="@+id/txtface"
-        android:layout_marginBottom="73dp"
         app:layout_constraintBottom_toTopOf="@+id/txtdireccicon"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintLeft_toRightOf="@+id/whatsappicon" />
 
     <ImageView
         android:id="@+id/direccicon"
         android:layout_width="85dp"
-        android:layout_height="73dp"
+        android:layout_height="118dp"
         app:srcCompat="@drawable/ubicacion"
-        app:layout_constraintLeft_toLeftOf="@+id/whatsappicon"
-        android:layout_marginBottom="31dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailicon"
-        android:layout_marginLeft="-11dp" />
+        tools:layout_editor_absoluteY="259dp"
+        app:layout_constraintLeft_toLeftOf="@+id/whatsappicon" />
 
     <TextView
         android:id="@+id/txtdireccicon"
-        android:layout_width="250dp"
+        android:layout_width="253dp"
         android:layout_height="54dp"
+        android:layout_marginBottom="69dp"
         android:maxLines="4"
         android:minLines="1"
         android:text="C. 18 B No.304 por 20 y 35 Diag. Pedregales de Tanlum"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="@+id/txttel"
-        app:layout_constraintLeft_toLeftOf="@+id/txttel"
-        app:layout_constraintHorizontal_bias="1.0"
-        android:layout_marginBottom="68dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtemail" />
+        app:layout_constraintBottom_toTopOf="@+id/txtemail"
+        tools:layout_editor_absoluteX="105dp" />
 
     <ImageView
         android:id="@+id/emailicon"
         android:layout_width="81dp"
-        android:layout_height="75dp"
+        android:layout_height="118dp"
         app:srcCompat="@drawable/email"
-        app:layout_constraintLeft_toLeftOf="@+id/direccicon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="69dp"
-        android:layout_marginLeft="8dp" />
+        tools:layout_editor_absoluteY="385dp"
+        app:layout_constraintLeft_toLeftOf="@+id/direccicon" />
 
     <TextView
         android:id="@+id/txtemail"
-        android:layout_width="250dp"
+        android:layout_width="255dp"
         android:layout_height="19dp"
         android:text="tanlum@bellezatania.com"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="@+id/txtdireccicon"
-        app:layout_constraintLeft_toLeftOf="@+id/txtdireccicon"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="97dp" />
+        tools:layout_editor_absoluteY="422dp"
+        tools:layout_editor_absoluteX="97dp" />
 </android.support.constraint.ConstraintLayout>
