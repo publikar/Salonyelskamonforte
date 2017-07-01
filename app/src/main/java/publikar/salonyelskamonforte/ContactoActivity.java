@@ -65,9 +65,26 @@ TextView txtfacebook,txtwhatsapp,txtdireccion,txtemail;
         //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
         //startActivity(launchIntent);
 
-        Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("content://com.android.contacts/data/9991010967"));
-        i.setPackage("com.whatsapp");           // so that only Whatsapp reacts and not the chooser
-        startActivity(i);
+
+    }
+
+    public void abrirubicacion(View v)
+    { Uri gmmIntentUri = Uri.parse("google.navigation:q=21.0025435,-89.6312312");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+
+
+    }
+
+    public void abriremail(View v)
+    {
+        Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Informes");
+        intent.setData(Uri.parse("mailto:yelskamonfortesalon@gmail.com")); // or just "mailto:" for blank
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+        startActivity(intent);
     }
 
     private String getFacebookPageURL(Context context) {
