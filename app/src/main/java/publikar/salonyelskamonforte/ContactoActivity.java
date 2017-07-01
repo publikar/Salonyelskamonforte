@@ -62,8 +62,12 @@ TextView txtfacebook,txtwhatsapp,txtdireccion,txtemail;
 
     public void abrirwhatsapp(View v)
     {
-        Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
-        startActivity(launchIntent);
+        //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+        //startActivity(launchIntent);
+
+        Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("content://com.android.contacts/data/9991010967"));
+        i.setPackage("com.whatsapp");           // so that only Whatsapp reacts and not the chooser
+        startActivity(i);
     }
 
     private String getFacebookPageURL(Context context) {
