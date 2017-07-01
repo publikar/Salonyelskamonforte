@@ -1,6 +1,7 @@
 package publikar.salonyelskamonforte;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,7 @@ public class MenugralActivity extends AppCompatActivity {
     Button btnpuntos;
     Button btncurso;
     Button btnllegar;
-    Button btnexpe;
+    Button btncontacto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +62,22 @@ public class MenugralActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                 Intent intentLog = new Intent(MenugralActivity.this, MapsActivity.class);
-                  startActivity(intentLog);
+                 //Intent intentLog = new Intent(MenugralActivity.this, MapsActivity.class);
+                  //startActivity(intentLog);
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=21.0025435,-89.6312312");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
 
 
                 }
             });
 
-            btnexpe = (Button) findViewById(R.id.buttonExpediente);
-            btnexpe.setOnClickListener(new View.OnClickListener() {
+            btncontacto = (Button) findViewById(R.id.buttonContacto);
+            btncontacto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intentLog = new Intent(MenugralActivity.this, ExpedienteActivity.class);
+                    Intent intentLog = new Intent(MenugralActivity.this, ContactoActivity.class);
                     startActivity(intentLog);
 
 

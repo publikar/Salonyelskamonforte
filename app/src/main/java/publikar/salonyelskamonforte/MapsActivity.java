@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -244,7 +245,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             MIUBICACION=new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
-            encontrarDireccion(MIUBICACION.latitude,MIUBICACION.longitude,SALON.latitude,SALON.longitude,GMapV2Direction.MODE_DRIVING);
+          //  encontrarDireccion(MIUBICACION.latitude,MIUBICACION.longitude,SALON.latitude,SALON.longitude,GMapV2Direction.MODE_DRIVING);
 
         }
     }
