@@ -171,7 +171,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void handleGetDirectionsResult(ArrayList<LatLng> directionPoints) {
-        PolylineOptions linea = new PolylineOptions().width(5).color(Color.RED);
+        PolylineOptions linea = new PolylineOptions().width(5).color(Color.BLUE);
 
         for (int i = 0; i < directionPoints.size(); i++) {
             linea.add(directionPoints.get(i));
