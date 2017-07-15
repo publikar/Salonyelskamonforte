@@ -1,15 +1,27 @@
 package publikar.salonyelskamonforte;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class ContactoActivity extends AppCompatActivity {
 
@@ -60,19 +72,93 @@ TextView txtfacebook,txtwhatsapp,txtdireccion,txtemail;
         startActivity(facebookIntent);
     }
 
+
+    private void requestpermission() {
+
+        ActivityCompat.requestPermissions(ContactoActivity.this,
+                new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_CONTACTS},
+                0);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==0) {
+            if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
+
+            }
+        }
+    }
+
     public void abrirwhatsapp(View v)
     {
+        requestpermission();
+String smsNumber="+5219991010967";
+        if(contactExists(ContactoActivity.this,smsNumber)) {
+            Uri uri = Uri.parse("smsto:" + smsNumber);
+            Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+            i.setPackage("com.whatsapp");
+            startActivity(i);
+            //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+            //startActivity(launchIntent);
+        }else
+        {
+           addcontact(smsNumber);
 
-        String smsNumber="9991010967";
-        Uri uri = Uri.parse("smsto:" + smsNumber);
-        Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-        i.putExtra("sms_body", "YELSKA MONFORTE SALON");
-        i.setPackage("com.whatsapp");
-        startActivity(i);
-        //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
-        //startActivity(launchIntent);
+        }
+
+    }
+
+    private void addcontact(String smsNumber)
+    {
+        ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
+        operationList.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build());
 
 
+        operationList.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, "Yelska Monforte Salon")
+
+                .build());
+
+        operationList.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, smsNumber)
+                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_HOME)
+                .build());
+
+
+        try{
+            ContentProviderResult[] results = getContentResolver().applyBatch(ContactsContract.AUTHORITY, operationList);
+            Toast.makeText(ContactoActivity.this,"Contacto agregado",Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public boolean contactExists(Activity _activity, String number) {
+        if (number != null) {
+            Uri lookupUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+            String[] mPhoneNumberProjection = { ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.NUMBER, ContactsContract.PhoneLookup.DISPLAY_NAME };
+            Cursor cur = _activity.getContentResolver().query(lookupUri, mPhoneNumberProjection, null, null, null);
+            try {
+                if (cur.moveToFirst()) {
+                    return true;
+                }
+            } finally {
+                if (cur != null)
+                    cur.close();
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
 
     public void abrirubicacion(View v)
