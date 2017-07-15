@@ -63,7 +63,7 @@ TextView txtfacebook,txtwhatsapp,txtdireccion,txtemail;
     public void abrirwhatsapp(View v)
     {
 
-        String smsNumber="9991010967@s.whatsapp.net";
+        String smsNumber="9991010967";
         Uri uri = Uri.parse("smsto:" + smsNumber);
         Intent i = new Intent(Intent.ACTION_SENDTO, uri);
         i.putExtra("sms_body", "YELSKA MONFORTE SALON");
