@@ -93,18 +93,23 @@ TextView txtfacebook,txtwhatsapp,txtdireccion,txtemail;
     public void abrirwhatsapp(View v)
     {
         requestpermission();
-String smsNumber="+5219991010967";
-        if(contactExists(ContactoActivity.this,smsNumber)) {
-            Uri uri = Uri.parse("smsto:" + smsNumber);
-            Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-            i.setPackage("com.whatsapp");
-            startActivity(i);
-            //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
-            //startActivity(launchIntent);
-        }else
-        {
-           addcontact(smsNumber);
+        try {
+            String smsNumber = "+5219991010967";
+            if (contactExists(ContactoActivity.this, smsNumber)) {
+                Uri uri = Uri.parse("smsto:" + smsNumber);
+                Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+                i.setPackage("com.whatsapp");
+                startActivity(i);
+                //Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+                //startActivity(launchIntent);
+            } else {
+                addcontact(smsNumber);
 
+            }
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(ContactoActivity.this,"No cuenta con la aplicación Whatsapp",Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -131,11 +136,11 @@ String smsNumber="+5219991010967";
                 .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, smsNumber)
                 .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_HOME)
                 .build());
-
+        Toast.makeText(ContactoActivity.this,"Contacto agregado. En unos segundos aparecerá en su lista de whatsapp",Toast.LENGTH_LONG).show();
 
         try{
             ContentProviderResult[] results = getContentResolver().applyBatch(ContactsContract.AUTHORITY, operationList);
-            Toast.makeText(ContactoActivity.this,"Contacto agregado",Toast.LENGTH_SHORT).show();
+
         }catch(Exception e){
             e.printStackTrace();
         }
